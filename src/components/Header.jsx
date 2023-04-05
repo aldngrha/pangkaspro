@@ -18,7 +18,7 @@ export default function Header() {
             </a>
           </div>
           <div
-            className={`lg:w-5/12 w-full bg-primary lg:bg-none fixed lg:static top-0 h-full lg:h-auto p-10 lg:p-0 transition-all ${
+            className={`lg:w-5/12 w-full bg-primary lg:bg-none fixed lg:static top-0 h-full lg:h-auto p-10 lg:p-0 transition-all z-10 ${
               offCanvas ? "left-0" : "-left-full"
             }`}
           >

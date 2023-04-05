@@ -26,13 +26,13 @@ export default function Barbershop() {
       </div>
       <motion.div
         ref={carousel}
-        className="overflow-hidden cursor-grab"
+        className="overflow-hidden cursor-grab "
         whileTap={{ cursor: "grabbing" }}
       >
         <motion.div
           drag="x"
           dragConstraints={{ right: 0, left: -width }}
-          className="flex gap-x-5"
+          className="flex gap-x-5 lg:gap-x-7 z-1"
         >
           <Barber />
           <Barber />

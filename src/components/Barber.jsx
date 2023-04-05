@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 export default function Barber() {
   return (
     <motion.div className="container mx-auto my-14">
-      <motion.div className="w-[295px] rounded-md bg-white shadow-lg transform transition-all hover:scale-105">
+      <motion.div className="w-[295px] rounded-md bg-white shadow-lg">
         <div className="p-3">
           <img
-            className="w-full h-[253px] rounded-lg object-cover"
+            className="w-full h-[253px] rounded-lg object-cover pointer-events-none"
             src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="Headphone"
           />
