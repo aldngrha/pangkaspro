@@ -30,10 +30,10 @@ export default function ProductDetail() {
           </div>
         </div>
         <div className="flex-1 px-4 md:p-6 ">
-          <h2 className="text-5xl font-semibold font-poppins">
+          <h2 className="text-2xl md:text-5xl font-semibold font-poppins">
             Pangkas Rambut Ipung
           </h2>
-          <p className="text-xl font-poppins py-3">Rp140.000</p>
+          <p className="text-lg md:text-xl font-poppins py-3">Rp140.000</p>
           <Button
             onClick=""
             text="Pesan Sekarang"
