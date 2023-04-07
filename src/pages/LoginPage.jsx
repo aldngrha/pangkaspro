@@ -53,7 +53,7 @@ export default function LoginPage() {
             <p className="text-center pt-4 text-gray-400 font-light font-poppins">
               Belum punya akun?{" "}
               <Link
-                to="/"
+                to="/sign-up"
                 className="text-secondary font-bold hover:text-secondary-hover"
               >
                 Daftar disini

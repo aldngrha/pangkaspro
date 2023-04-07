@@ -27,7 +27,7 @@ export default function RegisterPage() {
           >
             <div className="items-center text-center pb-7">
               <h1 className="font-nunito font-black text-xl mb-4">
-                Masuk Akun
+                Daftar Akun
               </h1>
               <p className="text-gray-400 font-light">
                 Cari pangkas rambut terbaik <br /> langgananmu disini
@@ -129,7 +129,7 @@ export default function RegisterPage() {
               <p className="text-center pt-4 text-gray-400 font-light font-poppins">
                 Sudah punya akun?{" "}
                 <Link
-                  to="/"
+                  to="/sign-in"
                   className="text-secondary font-bold hover:text-secondary-hover"
                 >
                   Masuk disini
