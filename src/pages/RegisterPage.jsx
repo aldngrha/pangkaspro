@@ -57,7 +57,7 @@ export default function RegisterPage() {
             <div className="my-4">
               <div className="mx-7 lg:mx-16">
                 <p className="mb-2 font-poppins font-medium">
-                  Mau menjadi kapster?
+                  Mau membuka pangkas rambut?
                 </p>
                 <label className="inline-flex items-center mr-6">
                   <input
