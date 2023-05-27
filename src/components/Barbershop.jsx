@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Button from "./Button.jsx";
 import Barber from "./Barber.jsx";
 
-export default function Barbershop() {
+export default function Barbershop({ data }) {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 
@@ -34,11 +34,10 @@ export default function Barbershop() {
           dragConstraints={{ right: 0, left: -width }}
           className="flex gap-x-5 lg:gap-x-7 z-1"
         >
-          <Barber />
-          <Barber />
-          <Barber />
-          <Barber />
-          <Barber />
+          {data &&
+            data.barbershop.map((barber) => (
+              <Barber key={barber._id} barber={barber} />
+            ))}
         </motion.div>
       </motion.div>
       <div className="flex justify-center -mt-5">

@@ -3,7 +3,10 @@ import React from "react";
 export default function Input({
   forLabel,
   label,
+  name,
   type,
+  value,
+  onChange,
   placeholder,
   margin,
   animate,
@@ -16,6 +19,7 @@ export default function Input({
         </label>
         <input
           type={type}
+          name={name}
           className="block w-full text-sm text-gray-400
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0
@@ -34,6 +38,9 @@ export default function Input({
         </label>
         <input
           type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
           className="py-2 bg-[#FAFAFA] px-4 rounded-lg font-poppins focus:outline-none"
           placeholder={placeholder}
           onAnimationEnd={animate}

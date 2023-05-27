@@ -3,7 +3,7 @@ import Button from "./Button.jsx";
 import Gallery from "./Gallery.jsx";
 import { motion } from "framer-motion";
 
-export default function GallerySection() {
+export default function GallerySection({ data }) {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 
@@ -32,9 +32,10 @@ export default function GallerySection() {
           dragConstraints={{ right: 0, left: -width }}
           className="flex gap-x-5 lg:gap-x-7 z-1"
         >
-          <Gallery />
-          <Gallery />
-          <Gallery />
+          {data &&
+            data.image.map((gallery) => (
+              <Gallery key={gallery._id} gallery={gallery} />
+            ))}
         </motion.div>
       </motion.div>
     </section>
