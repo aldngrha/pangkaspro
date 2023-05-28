@@ -4,10 +4,22 @@ import Star from "./Star.jsx";
 import { BsHeart } from "react-icons/bs";
 import Counter from "./Counter.jsx";
 import useDetailPageStore from "../stores/useDetailPageStore.jsx";
+import Cookies from "js-cookie";
 
 export default function ProductDetail() {
   const dataApi = useDetailPageStore((state) => state.dataApi);
   const [slider, setSlider] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    // Check if token exists in cookies
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [token]);
 
   useEffect(() => {
     if (dataApi.imageId && dataApi.imageId.length > 0) {
@@ -16,7 +28,7 @@ export default function ProductDetail() {
   }, [dataApi.imageId]);
 
   return (
-    <section className="container mx-auto bg-white rounded-2xl">
+    <section className="container mx-auto bg-white rounded-2xl py-3 md:py-0">
       <div className="flex flex-wrap my-4 md:my-12">
         <div className="flex-1">
           <div className="slider ml-4">
@@ -66,7 +78,7 @@ export default function ProductDetail() {
                 : "Price not available"}
             </p>
             <button>
-              <BsHeart className="text-3xl" />
+              <BsHeart className="text-2xl md:text-3xl" />
             </button>
           </div>
           <Star value={dataApi.rating} />
@@ -78,14 +90,27 @@ export default function ProductDetail() {
           <h6 className="text-xl font-semibold mb-4 font-poppins">
             Tentang pagkas rambut
           </h6>
-          <p className="text-gray-500 font-light font-poppins">
+          <p
+            className={`text-gray-500 font-light font-poppins ${
+              isLoggedIn ? "" : "mb-6"
+            } `}
+          >
             {dataApi.description}
           </p>
-          <Button
-            onClick=""
-            text="Pesan Sekarang"
-            color="text-white bg-secondary hover:bg-secondary-hover my-4"
-          />
+          {isLoggedIn ? (
+            <Button
+              onClick=""
+              text="Pesan Sekarang"
+              color="text-white bg-secondary hover:bg-secondary-hover my-4"
+            />
+          ) : (
+            <Button
+              type="link"
+              to="/sign-in"
+              text="Login untuk memesan"
+              color="text-white bg-secondary hover:bg-secondary-hover my-4"
+            />
+          )}
         </div>
       </div>
     </section>

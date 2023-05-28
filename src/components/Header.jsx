@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import Button from "./Button.jsx";
 import { BiMenu, BiX } from "react-icons/bi";
+import Dropdown from "./Dropdown.jsx";
 
 export default function Header() {
   const [offCanvas, setOffCanvas] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    // Check if token exists in cookies
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [token]);
+
   return (
     <nav className="py-6">
       <div className="container mx-auto">
@@ -42,12 +56,16 @@ export default function Header() {
                 <a href="">About</a>
               </li>
               <li className="lg:hidden">
-                <Button
-                  type="link"
-                  to="/sign-in"
-                  text="Sign In"
-                  color="text-white bg-secondary hover:bg-secondary-hover"
-                />
+                {isLoggedIn ? (
+                  <Dropdown />
+                ) : (
+                  <Button
+                    type="link"
+                    to="/sign-in"
+                    text="Sign In"
+                    color="text-white bg-secondary hover:bg-secondary-hover"
+                  />
+                )}
               </li>
             </ul>
           </div>
@@ -66,12 +84,16 @@ export default function Header() {
                 placeholder="Search ..."
               />
             </label>
-            <Button
-              type="link"
-              to="/sign-in"
-              text="Sign In"
-              color="text-white bg-secondary hover:bg-secondary-hover"
-            />
+            {isLoggedIn ? (
+              <Dropdown />
+            ) : (
+              <Button
+                type="link"
+                to="/sign-in"
+                text="Sign In"
+                color="text-white bg-secondary hover:bg-secondary-hover"
+              />
+            )}
           </div>
           <div
             onClick={() => setOffCanvas(!offCanvas)}

@@ -1,12 +1,55 @@
 import React, { useState } from "react";
-import Input from "../components/Input.jsx";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button.jsx";
+import Input from "../components/Input.jsx";
 
 export default function LoginPage() {
-  // const [form, setForm] = useState("");
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleLogin = async () => {};
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/api/v1/auth/login",
+        form
+      );
+      // Get the token value from the response
+      const token = response.data.data.token;
+
+      toast.success("Berhasil signin", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Set the token value in the cookie
+      Cookies.set("token", token);
+      navigate("/");
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Internal server error", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return (
     <section className="container">
       <div className="flex">
@@ -34,18 +77,18 @@ export default function LoginPage() {
                 label="Email"
                 name="email"
                 type="email"
-                value=""
-                // onChange={(event) => setEmail(event.target.value)}
+                value={form.email}
+                onChange={handleChange}
                 margin="mx-7 lg:mx-16"
                 placeholder="Masukkan email ..."
               />
               <Input
                 forLabel="password"
                 label="Password"
-                name="email"
+                name="password"
                 type="password"
-                // value={password}
-                // onChange={(event) => setPassword(event.target.value)}
+                value={form.password}
+                onChange={handleChange}
                 margin="mx-7 lg:mx-16"
                 placeholder="Masukkan password ..."
               />
@@ -56,7 +99,8 @@ export default function LoginPage() {
                 Lupa password?
               </Link>
               <Button
-                // onClick={() => handleLogin()}
+                onClick={handleLogin}
+                type="button"
                 text="Masuk"
                 color="mt-5 text-white bg-secondary hover:bg-secondary-hover mx-7 lg:mx-16"
               />
