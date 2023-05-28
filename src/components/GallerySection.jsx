@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button.jsx";
 import Gallery from "./Gallery.jsx";
 import { motion } from "framer-motion";
+import useLandingPageStore from "../stores/useLandingPageStore.jsx";
 
-export default function GallerySection({ data }) {
+export default function GallerySection() {
+  const data = useLandingPageStore((state) => state.dataApi);
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 

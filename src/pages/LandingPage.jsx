@@ -7,7 +7,6 @@ import GallerySection from "../components/GallerySection.jsx";
 import useLandingPageStore from "../stores/useLandingPageStore.jsx";
 
 export default function () {
-  const dataApi = useLandingPageStore((state) => state.dataApi);
   const fetchData = useLandingPageStore((state) => state.fetchData);
 
   const apiUrl = "http://localhost:9000";
@@ -22,8 +21,8 @@ export default function () {
       <div className="px-4 overflow-hidden">
         <Header />
         <Hero />
-        <Barbershop data={dataApi} />
-        <GallerySection data={dataApi} />
+        <Barbershop />
+        <GallerySection />
         <Footer />
       </div>
     </>

@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Button from "./Button.jsx";
 import Barber from "./Barber.jsx";
+import useLandingPageStore from "../stores/useLandingPageStore.jsx";
 
-export default function Barbershop({ data }) {
+export default function Barbershop() {
+  const data = useLandingPageStore((state) => state.dataApi);
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 

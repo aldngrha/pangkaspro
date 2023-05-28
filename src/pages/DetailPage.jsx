@@ -9,8 +9,6 @@ import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 
 export default function DetailPage() {
   const { id } = useParams();
-
-  const dataApi = useDetailPageStore((state) => state.dataApi);
   const fetchData = useDetailPageStore((state) => state.fetchData);
 
   const apiUrl = "http://localhost:9000";
@@ -30,8 +28,8 @@ export default function DetailPage() {
             { url: `/detail/${id}/barbershop`, name: "Barber Detail" },
           ]}
         />
-        <ProductDetail product={dataApi} />
-        <KapsterList kapsters={dataApi} />
+        <ProductDetail />
+        <KapsterList />
         <Footer />
       </div>
     </>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button.jsx";
 
 export default function LoginPage() {
-  const [form, setForm] = useState("");
+  // const [form, setForm] = useState("");
 
   const handleLogin = async () => {};
   return (
@@ -34,8 +34,8 @@ export default function LoginPage() {
                 label="Email"
                 name="email"
                 type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value=""
+                // onChange={(event) => setEmail(event.target.value)}
                 margin="mx-7 lg:mx-16"
                 placeholder="Masukkan email ..."
               />
@@ -44,8 +44,8 @@ export default function LoginPage() {
                 label="Password"
                 name="email"
                 type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                // value={password}
+                // onChange={(event) => setPassword(event.target.value)}
                 margin="mx-7 lg:mx-16"
                 placeholder="Masukkan password ..."
               />
@@ -56,7 +56,7 @@ export default function LoginPage() {
                 Lupa password?
               </Link>
               <Button
-                onClick={() => handleLogin()}
+                // onClick={() => handleLogin()}
                 text="Masuk"
                 color="mt-5 text-white bg-secondary hover:bg-secondary-hover mx-7 lg:mx-16"
               />
@@ -69,6 +69,17 @@ export default function LoginPage() {
               >
                 Daftar disini
               </Link>
+            </p>
+            <p className="text-center pt-4 text-gray-400 font-light font-poppins">
+              Sudah daftar menjadi owner dan kapster? <br />
+              <a
+                href="http://localhost:9000"
+                className="text-secondary font-bold hover:text-secondary-hover"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Login disini
+              </a>
             </p>
           </div>
         </div>

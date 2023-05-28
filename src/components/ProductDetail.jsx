@@ -3,17 +3,17 @@ import Button from "./Button.jsx";
 import Star from "./Star.jsx";
 import { BsHeart } from "react-icons/bs";
 import Counter from "./Counter.jsx";
+import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 
-export default function ProductDetail({ product }) {
-  const { imageId, name, price, rating, description } = product;
-
+export default function ProductDetail() {
+  const dataApi = useDetailPageStore((state) => state.dataApi);
   const [slider, setSlider] = useState("");
 
   useEffect(() => {
-    if (imageId && imageId.length > 0) {
-      setSlider(imageId[0]);
+    if (dataApi.imageId && dataApi.imageId.length > 0) {
+      setSlider(dataApi.imageId[0]);
     }
-  }, [imageId]);
+  }, [dataApi.imageId]);
 
   return (
     <section className="container mx-auto bg-white rounded-2xl">
@@ -21,7 +21,7 @@ export default function ProductDetail({ product }) {
         <div className="flex-1">
           <div className="slider ml-4">
             <div className="thumbnail">
-              {imageId?.map((item) => {
+              {dataApi.imageId?.map((item) => {
                 return (
                   <div
                     className="px-2"
@@ -48,7 +48,7 @@ export default function ProductDetail({ product }) {
               <div className="item rounded-lg h-full overflow-hidden">
                 <img
                   src={`http://localhost:9000/${slider.imageUrl}`}
-                  alt={name}
+                  alt={dataApi.name}
                   className="object-cover w-full h-full rounded-lg"
                 />
               </div>
@@ -57,19 +57,19 @@ export default function ProductDetail({ product }) {
         </div>
         <div className="flex-1 px-4 md:p-6 ">
           <h2 className="text-2xl md:text-5xl font-semibold font-poppins">
-            {name}
+            {dataApi.name}
           </h2>
           <div className="flex justify-between">
             <p className="text-lg md:text-xl font-poppins py-3">
-              {price
-                ? `Rp${price.toLocaleString("id-ID")}`
+              {dataApi.price
+                ? `Rp${dataApi.price.toLocaleString("id-ID")}`
                 : "Price not available"}
             </p>
             <button>
               <BsHeart className="text-3xl" />
             </button>
           </div>
-          <Star value={rating} />
+          <Star value={dataApi.rating} />
           <div className="pt-5">
             <p className="text-lg font-medium">Jumlah Orang</p>
           </div>
@@ -78,7 +78,9 @@ export default function ProductDetail({ product }) {
           <h6 className="text-xl font-semibold mb-4 font-poppins">
             Tentang pagkas rambut
           </h6>
-          <p className="text-gray-400 font-light font-poppins">{description}</p>
+          <p className="text-gray-500 font-light font-poppins">
+            {dataApi.description}
+          </p>
           <Button
             onClick=""
             text="Pesan Sekarang"

@@ -1,7 +1,9 @@
 import React from "react";
 import Kapster from "./Kapster.jsx";
+import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 
-export default function KapsterList({ kapsters }) {
+export default function KapsterList() {
+  const kapsters = useDetailPageStore((state) => state.dataApi);
   return (
     <section className="bg-primary py-5">
       <div className="container mx-auto">

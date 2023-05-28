@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Button = ({ type, to, onClick, color, text }) => {
+const Button = ({ type, tipe, to, onClick, color, text }) => {
   if (type === "link") {
     return (
       <Link
@@ -15,6 +15,7 @@ const Button = ({ type, to, onClick, color, text }) => {
     return (
       <button
         onClick={onClick}
+        type={tipe}
         className={`px-6 py-2 font-poppins cursor-pointer ${color} rounded-lg font-semibold`}
       >
         {text}
