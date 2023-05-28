@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Star from "./Star.jsx";
 
 export default function Barber({ barber }) {
-  const { imageId, name, price, rating } = barber;
+  const { imageId, name, price, rating, _id } = barber;
   const image = imageId[0];
   // Buat URL lengkap untuk gambar
   const imageUrl = `http://localhost:9000/${image.imageUrl}`;
@@ -23,7 +23,7 @@ export default function Barber({ barber }) {
               {name}
             </h2>
             <div className="flex items-center justify-between">
-              <span className="text-md">Rp{price.toLocaleString()}</span>
+              <span className="text-md">Rp{price.toLocaleString("id-ID")}</span>
               <button>
                 <BsHeart className="text-xl" />
               </button>
@@ -37,7 +37,8 @@ export default function Barber({ barber }) {
               />
               <Button
                 type="link"
-                text="View More"
+                to={`/detail/${_id}/barbershop`}
+                text="View Detail"
                 color="text-secondary hover:text-secondary-hover font-light"
               />
             </div>

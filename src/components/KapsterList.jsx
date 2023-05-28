@@ -1,6 +1,7 @@
 import React from "react";
+import Kapster from "./Kapster.jsx";
 
-export default function KapsterList() {
+export default function KapsterList({ kapsters }) {
   return (
     <section className="bg-primary py-5">
       <div className="container mx-auto">
@@ -11,16 +12,10 @@ export default function KapsterList() {
         </div>
         <div className="flex overflow-x-auto mb-4 -mx-3">
           <div className="px-3 flex gap-x-5">
-            <div className="rounded-lg p-4 pb-8 relative bg-white">
-              <div className="rounded-lg overflow-hidden w-36 h-30">
-                <img
-                  src="/assets/images/Kapster.jpg"
-                  alt="Kapster"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-              <h4 className="font-poppins font-semibold mt-3">Ipung</h4>
-            </div>
+            {kapsters &&
+              kapsters.kapsterId.map((kapster) => (
+                <Kapster key={kapster._id} kapster={kapster} />
+              ))}
           </div>
         </div>
       </div>
