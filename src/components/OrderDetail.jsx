@@ -1,8 +1,15 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import Button from "./Button.jsx";
+import useCheckoutStore from "../stores/useCheckoutStore.jsx";
+import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 
 export default function OrderDetail() {
+  const detailProduct = useCheckoutStore(
+    (state) => state.selectedProductDetail
+  );
+  const counterValue = useDetailPageStore((state) => state.counterValue);
+
   const [activeTab, setActiveTab] = useState();
   const [showInput, setShowInput] = useContext(CartContext);
 
@@ -26,18 +33,18 @@ export default function OrderDetail() {
           <ul className="flex flex-col gap-y-3">
             <li>Harga</li>
             <li>Potongan</li>
-            <li>Pajak</li>
           </ul>
           <ul className="flex flex-col gap-y-3">
-            <li>Rp140.000</li>
+            <li>Rp{detailProduct.price.toLocaleString("id-ID")}</li>
             <li>0%</li>
-            <li>10%</li>
           </ul>
         </div>
         <hr />
         <ul className="flex justify-between pt-3">
           <li className="font-semibold">Total Harga</li>
-          <li className="font-semibold">Rp154.000</li>
+          <li className="font-semibold">
+            Rp{(detailProduct.price * counterValue).toLocaleString("id-ID")}
+          </li>
         </ul>
       </div>
       <div className="max-w-xl">
@@ -76,13 +83,13 @@ export default function OrderDetail() {
           <div className="flex justify-between font-light py-6">
             <ul className="flex flex-col gap-y-3">
               <li>Nama Akun</li>
-              <li>Platform</li>
-              <li>Nomor VA</li>
+              <li>Bank</li>
+              <li>Nomor Rekening</li>
             </ul>
             <ul className="flex flex-col gap-y-3">
-              <li>Aldi Nugraha</li>
-              <li>DANA</li>
-              <li>8098982973812</li>
+              <li>{detailProduct.accountName}</li>
+              <li>{detailProduct.bank}</li>
+              <li>{detailProduct.accountNumber}</li>
             </ul>
           </div>
         </div>

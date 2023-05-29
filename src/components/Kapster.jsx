@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+import useCheckoutStore from "../stores/useCheckoutStore.jsx";
 
 export default function Kapster({ kapster }) {
-  const [isSelected, setIsSelected] = useState(false);
-  const { name, imageUrl, statusId } = kapster;
+  const setSelectedKapster = useCheckoutStore(
+    (state) => state.setSelectedKapster
+  );
+  const selectedKapster = useCheckoutStore((state) => state.selectedKapster);
+
+  const { _id, name, imageUrl, statusId } = kapster;
   const [countdown, setCountdown] = useState(statusId.time);
   const [status, setStatus] = useState("");
   const [statusColor, setStatusColor] = useState("");
@@ -18,7 +23,6 @@ export default function Kapster({ kapster }) {
       }
     });
 
-    // Mendengarkan peristiwa pembaruan status
     // Mendengarkan peristiwa pembaruan status
     socket.on("statusUpdate", ({ id, status }) => {
       if (id === statusId._id) {
@@ -53,14 +57,16 @@ export default function Kapster({ kapster }) {
     };
   }, [statusId._id]);
 
-  const handleClick = () => {
-    setIsSelected(!isSelected);
+  const handleSelectedKapster = () => {
+    setSelectedKapster(kapster);
   };
 
   return (
     <label
       className={`rounded-lg p-4 pb-4 relative bg-white transition-all cursor-pointer duration-300 ease-in-out ${
-        isSelected ? "border border-secondary" : "border border-primary "
+        selectedKapster && selectedKapster._id === _id
+          ? "border border-secondary"
+          : "border border-primary "
       }`}
     >
       <div className="rounded-lg overflow-hidden w-36 h-30">
@@ -82,7 +88,9 @@ export default function Kapster({ kapster }) {
       </div>
       <div
         className={`pt-2 flex justify-center ${
-          isSelected ? "opacity-100 scale-100" : "opacity-0 scale-0"
+          selectedKapster && selectedKapster._id === _id
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-0"
         } transition-all duration-300 ease-in-out`}
       >
         <svg
@@ -106,9 +114,10 @@ export default function Kapster({ kapster }) {
       <input
         className="hidden"
         type="radio"
+        value={_id}
         name="kapster"
-        checked={isSelected}
-        onChange={handleClick}
+        checked={selectedKapster && selectedKapster._id === _id}
+        onChange={handleSelectedKapster}
       />
     </label>
   );

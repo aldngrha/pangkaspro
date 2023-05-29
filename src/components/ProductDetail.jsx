@@ -5,12 +5,47 @@ import { BsHeart } from "react-icons/bs";
 import Counter from "./Counter.jsx";
 import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 import Cookies from "js-cookie";
+import useCheckoutStore from "../stores/useCheckoutStore.jsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
   const dataApi = useDetailPageStore((state) => state.dataApi);
+  const counterValue = useDetailPageStore((state) => state.counterValue);
+  const setSelectedProductDetail = useCheckoutStore(
+    (state) => state.setSelectedProductDetail
+  );
   const [slider, setSlider] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const token = Cookies.get("token");
+
+  const handleSelectProductDetail = () => {
+    if (counterValue === 0) {
+      // Tampilkan toast.error jika counterValue === 0
+      toast.error("Jumlah orang tidak boleh 0", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      const selectedDetail = {
+        id: dataApi._id,
+        name: dataApi.name,
+        price: dataApi.price,
+        accountName: dataApi.accountName,
+        bank: dataApi.bank,
+        accountNumber: dataApi.accountNumber,
+        image: dataApi.imageId[0],
+      };
+      setSelectedProductDetail(selectedDetail);
+      navigate(`/cart?counter=${counterValue}`);
+    }
+  };
 
   useEffect(() => {
     // Check if token exists in cookies
@@ -19,14 +54,11 @@ export default function ProductDetail() {
     } else {
       setIsLoggedIn(false);
     }
-  }, [token]);
 
-  useEffect(() => {
     if (dataApi.imageId && dataApi.imageId.length > 0) {
       setSlider(dataApi.imageId[0]);
     }
-  }, [dataApi.imageId]);
-
+  }, [token, dataApi.imageId]);
   return (
     <section className="container mx-auto bg-white rounded-2xl py-3 md:py-0">
       <div className="flex flex-wrap my-4 md:my-12">
@@ -99,7 +131,7 @@ export default function ProductDetail() {
           </p>
           {isLoggedIn ? (
             <Button
-              onClick=""
+              onClick={handleSelectProductDetail}
               text="Pesan Sekarang"
               color="text-white bg-secondary hover:bg-secondary-hover my-4"
             />

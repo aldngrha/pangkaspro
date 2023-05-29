@@ -1,17 +1,19 @@
 import React, { useState } from "react";
+import useDetailPageStore from "../stores/useDetailPageStore.jsx";
 
 export default function Counter() {
-  const [count, setCount] = useState(0);
+  const counterValue = useDetailPageStore((state) => state.counterValue);
+  const setCounterValue = useDetailPageStore((state) => state.setCounterValue);
 
   const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
+    setCounterValue(counterValue + 1);
   };
 
   const handleDecrement = () => {
-    if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
+    if (counterValue > 0) {
+      setCounterValue(counterValue - 1);
     } else {
-      setCount(0);
+      setCounterValue(0);
     }
   };
 
@@ -23,7 +25,9 @@ export default function Counter() {
       >
         -
       </button>
-      <span className=" px-5 py-1 bg-gray-50 text-gray-500">{count}</span>
+      <span className=" px-5 py-1 bg-gray-50 text-gray-500">
+        {counterValue}
+      </span>
       <button
         className="px-3 py-0.5 font-bold text-white text-lg bg-secondary rounded-md"
         onClick={handleIncrement}
