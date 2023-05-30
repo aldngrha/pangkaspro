@@ -3,15 +3,24 @@ import { CartContext } from "../context/CartContext.jsx";
 import Button from "./Button.jsx";
 import useCheckoutStore from "../stores/useCheckoutStore.jsx";
 import useDetailPageStore from "../stores/useDetailPageStore.jsx";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export default function OrderDetail() {
   const detailProduct = useCheckoutStore(
     (state) => state.selectedProductDetail
   );
+  const selectedKapster = useCheckoutStore((state) => state.selectedKapster);
   const counterValue = useDetailPageStore((state) => state.counterValue);
-
+  const form = useCheckoutStore((state) => state.form);
   const [activeTab, setActiveTab] = useState();
   const [showInput, setShowInput] = useContext(CartContext);
+  const navigate = useNavigate();
+
+  console.log(detailProduct);
+  console.log(selectedKapster);
 
   const handleButtonClick = (id) => {
     if (id === 0) {
@@ -25,6 +34,51 @@ export default function OrderDetail() {
     { id: 0, title: "Transfer" },
     { id: 1, title: "Bayar ditempat" },
   ];
+
+  const token = Cookies.get("token");
+
+  const handleCheckout = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", form.image);
+      formData.append("name", form.name);
+      formData.append("phoneNumber", form.phoneNumber);
+      formData.append("address", form.address);
+      formData.append("accountHolder", form.accountHolder);
+      formData.append("bankName", form.bankName);
+      formData.append("barberId", detailProduct.id);
+      formData.append("kapsterId", selectedKapster._id);
+      formData.append("quantity", counterValue);
+      formData.append(
+        "paymentMethod",
+        activeTab === 0 ? "Transfer" : "Bayar ditempat"
+      );
+
+      const response = await axios.post(
+        "http://localhost:9000/api/v1/transaction",
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`, // Token JWT yang telah diterima saat login
+          },
+        }
+      );
+      console.log(response);
+      navigate("/success");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Internal server error", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
   return (
     <section className="w-full px-4 py-3 md:px-6 md:w-3/12 bg-white rounded-lg lg:mr-20 font-poppins">
       <div className="pt-6">
@@ -94,7 +148,7 @@ export default function OrderDetail() {
           </div>
         </div>
         <Button
-          onClick=""
+          onClick={handleCheckout}
           text="Checkout sekarang"
           color={`${
             showInput ? "mt-5" : ""

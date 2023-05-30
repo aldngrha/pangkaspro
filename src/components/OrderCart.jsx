@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Input from "./Input.jsx";
 import { CartContext } from "../context/CartContext.jsx";
 import useCheckoutStore from "../stores/useCheckoutStore.jsx";
 import useDetailPageStore from "../stores/useDetailPageStore.jsx";
+import { Link } from "react-router-dom";
 
 export default function OrderCart() {
   const detailProduct = useCheckoutStore(
@@ -11,9 +12,17 @@ export default function OrderCart() {
   const selectedKapster = useCheckoutStore((state) => state.selectedKapster);
   const counterValue = useDetailPageStore((state) => state.counterValue);
   const [showInput] = useContext(CartContext);
+  const setForm = useCheckoutStore((state) => state.setForm);
 
-  console.log(detailProduct);
-  console.log(selectedKapster);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const imageFile = e.target.files[0];
+    setForm({ image: imageFile });
+  };
 
   return (
     <div
@@ -58,7 +67,7 @@ export default function OrderCart() {
         <p id="cart-empty" className="text-center py-8">
           Ooops... Cart is empty{" "}
           <Link to="/" className="underline">
-            Shop Now
+            Order Now
           </Link>
         </p>
       ) : (
@@ -116,45 +125,63 @@ export default function OrderCart() {
       )}
       <div className="py-10">
         <h1 className="text-xl font-nunito font-bold mb-5">Detail Konsumen</h1>
-        <div className="flex flex-col md:flex-row gap-x-6">
-          <Input
-            forLabel="Nama Lengkap"
-            label="Nama Lengkap"
-            type="text"
-            placeholder="Masukkan nama lengkap"
-          />
-          <Input
-            forLabel="Nomor Handphone"
-            label="Nomor Handphone"
-            type="text"
-            placeholder="Masukkan nomor hp"
-          />
-          <Input
-            forLabel="Alamat"
-            label="ALamat"
-            type="text"
-            placeholder="Masukkan alamat"
-          />
-        </div>
-        <div
-          className={`flex flex-col md:flex-row gap-x-6 ${
-            showInput ? "opacity-100" : "opacity-0"
-          } transition-all duration-500`}
-        >
-          <Input
-            forLabel="Nama Pengirim"
-            label="Nama Pengirim"
-            type="text"
-            placeholder="Masukkan nama pengirim"
-          />
-          <Input
-            forLabel="Asal Bank"
-            label="Asal Bank"
-            type="text"
-            placeholder="Masukkan asal bank"
-          />
-          <Input forLabel="Bukti Transfer" label="Bukti Transfer" type="file" />
-        </div>
+        <form encType="multipart/form-data">
+          <div className="flex flex-col md:flex-row gap-x-6">
+            <Input
+              forLabel="Nama Lengkap"
+              label="Nama Lengkap"
+              name="name"
+              type="text"
+              placeholder="Masukkan nama lengkap"
+              onChange={handleChange}
+            />
+            <Input
+              forLabel="Nomor Handphone"
+              label="Nomor Handphone"
+              type="text"
+              name="phoneNumber"
+              placeholder="Masukkan nomor hp"
+              onChange={handleChange}
+            />
+            <Input
+              forLabel="Alamat"
+              label="Alamat"
+              type="text"
+              name="address"
+              placeholder="Masukkan alamat"
+              onChange={handleChange}
+            />
+          </div>
+          <div
+            className={`flex flex-col md:flex-row gap-x-6 ${
+              showInput ? "opacity-100" : "opacity-0"
+            } transition-all duration-500`}
+          >
+            <Input
+              forLabel="Nama Pengirim"
+              label="Nama Pengirim"
+              type="text"
+              name="accountHolder"
+              placeholder="Masukkan nama pengirim"
+              onChange={handleChange}
+            />
+            <Input
+              forLabel="Asal Bank"
+              label="Asal Bank"
+              type="text"
+              name="bankName"
+              placeholder="Masukkan asal bank"
+              onChange={handleChange}
+            />
+            <Input
+              forLabel="Bukti Transfer"
+              label="Bukti Transfer"
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

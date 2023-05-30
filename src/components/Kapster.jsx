@@ -61,13 +61,16 @@ export default function Kapster({ kapster }) {
     setSelectedKapster(kapster);
   };
 
+  const isKapsterUnavailable =
+    statusId.status === "unavailable" && statusId.status === "work";
+
   return (
     <label
-      className={`rounded-lg p-4 pb-4 relative bg-white transition-all cursor-pointer duration-300 ease-in-out ${
-        selectedKapster && selectedKapster._id === _id
-          ? "border border-secondary"
-          : "border border-primary "
-      }`}
+      className={`rounded-lg p-4 pb-4 relative bg-white transition-all duration-300 ease-in-out ${
+        selectedKapster && selectedKapster._id === _id && !isKapsterUnavailable
+          ? "border border-secondary cursor-pointer"
+          : "border border-primary"
+      } ${isKapsterUnavailable ? "cursor-not-allowed opacity-50" : ""}`}
     >
       <div className="rounded-lg overflow-hidden w-36 h-30">
         <img
@@ -93,23 +96,25 @@ export default function Kapster({ kapster }) {
             : "opacity-0 scale-0"
         } transition-all duration-300 ease-in-out`}
       >
-        <svg
-          id="icon-check"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="10" cy="10" r="10" fill="#FFD9BE" />
-          <path
-            d="M5.83301 10L8.46459 12.5L14.1663 7.5"
-            stroke="#D25B04"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {!isKapsterUnavailable && (
+          <svg
+            id="icon-check"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="10" cy="10" r="10" fill="#FFD9BE" />
+            <path
+              d="M5.83301 10L8.46459 12.5L14.1663 7.5"
+              stroke="#D25B04"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
       </div>
       <input
         className="hidden"
@@ -118,6 +123,7 @@ export default function Kapster({ kapster }) {
         name="kapster"
         checked={selectedKapster && selectedKapster._id === _id}
         onChange={handleSelectedKapster}
+        disabled={isKapsterUnavailable}
       />
     </label>
   );

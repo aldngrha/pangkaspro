@@ -26,6 +26,7 @@ export default function Input({
                         file:text-sm file:font-semibold
                         file:bg-orange-50 file:text-secondary
                         hover:file:bg-orange-100 focus:outline-none font-poppins"
+          onChange={onChange}
           onAnimationEnd={animate}
         />
       </div>
