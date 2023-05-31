@@ -4,14 +4,73 @@ import Footer from "../components/Footer.jsx";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { MdLibraryAdd } from "react-icons/md";
+import Counter from "../components/Counter.jsx";
+import useDetailPageStore from "../stores/useDetailPageStore.jsx";
+import { toast } from "react-toastify";
 
 export default function StatusOrder() {
   const [transactions, setTransactions] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTransactionId, setModalTransactionId] = useState(null);
+  const counterValue = useDetailPageStore((state) => state.counterValue);
   const token = Cookies.get("token");
 
   useEffect(() => {
     fetchTransactions();
   }, []);
+
+  const handleOpenModal = (transactionId) => {
+    setIsModalOpen(true);
+    console.log("click", transactionId);
+    setModalTransactionId(transactionId);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setModalTransactionId(null);
+  };
+
+  const handleAddons = async (transactionId) => {
+    if (counterValue === 0) {
+      // Tampilkan toast.error jika counterValue === 0
+      toast.error("Jumlah orang tidak boleh 0", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      const addOnsData = {
+        addOns: [
+          {
+            quantity: counterValue,
+          },
+        ],
+      };
+      await axios.post(
+        `http://localhost:9000/api/v1/transaction/${transactionId}/addons`,
+        addOnsData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Berhasil menambah order", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      handleCloseModal();
+    }
+  };
 
   function getStatusClass(status) {
     const statusClasses = {
@@ -116,6 +175,7 @@ export default function StatusOrder() {
                       </td>
                       <td className="px-6 py-4 flex space-x-2">
                         <a
+                          onClick={() => handleOpenModal(transaction._id)}
                           href="#"
                           className="text-lg font-medium text-secondary hover:text-secondary-hover flex flex-col items-center justify-center"
                         >
@@ -127,7 +187,9 @@ export default function StatusOrder() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8">No status found.</td>
+                    <td colSpan="8" className="text-center py-2">
+                      No status found.
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -135,6 +197,30 @@ export default function StatusOrder() {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white w-96 p-4 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Penambahan Order</h3>
+            <p className="text-md text-gray-500 font-light">Jumlah orang</p>
+            <Counter />
+            <div className="flex justify-end mt-10">
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-secondary rounded-lg hover:bg-secondary-hover"
+                onClick={() => handleAddons(modalTransactionId)}
+              >
+                Tambah Order
+              </button>
+              <button
+                className="px-4 py-2 ml-2 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 hover:bg-gray-100"
+                onClick={handleCloseModal}
+              >
+                Tidak jadi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
