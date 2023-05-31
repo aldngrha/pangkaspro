@@ -62,7 +62,7 @@ export default function Kapster({ kapster }) {
   };
 
   const isKapsterUnavailable =
-    statusId.status === "unavailable" && statusId.status === "work";
+    statusId.status === "unavailable" || statusId.status === "work";
 
   return (
     <label

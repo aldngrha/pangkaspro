@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { BsArrowBarRight, BsGear } from "react-icons/bs";
+import { BsArrowBarRight } from "react-icons/bs";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { MdOutlineDashboard } from "react-icons/md";
 
 export default function Dropdown() {
   const [dropdown, setDropdown] = useState(false);
@@ -34,18 +35,18 @@ export default function Dropdown() {
            md:right-0 mt-36 w-48 bg-white border rounded-md shadow-lg"
           >
             <div className="flex flex-col gap-y-2 py-2 px-3">
-              <a
-                href=""
-                className="hover:translate-x-2 transition-transform ease-in duration-200 hover:text-secondary-hover px-2 py-1 flex flex-row items-center gap-x-2 text-gray-600"
+              <Link
+                to="/dashboard/transactions"
+                className="hover:translate-x-2 transition-transform ease-in duration-200 hover:text-secondary-hover px-2 py-1 flex flex-row items-center gap-x-2 text-gray-400"
               >
                 <span>
-                  <BsGear />
+                  <MdOutlineDashboard />
                 </span>
-                <span className="text-sm">Pengaturan</span>
-              </a>
+                <span className="text-sm">Dashboard</span>
+              </Link>
               <div
-                className="hover:translate-x-2 transition-transform ease-in duration-200 hover:text-secondary-hover px-2 py-1 cursor-pointer text-gray-600 flex flex-row items-center gap-x-2"
-                onClick={() => handleLogout()}
+                className="hover:translate-x-2 transition-transform ease-in duration-200 hover:text-secondary-hover px-2 py-1 cursor-pointer text-gray-400 flex flex-row items-center gap-x-2"
+                onClick={handleLogout}
               >
                 <span className="transform rotate-180">
                   <BsArrowBarRight />

@@ -14,6 +14,9 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import SuccessPage from "./pages/SuccessPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import HistoryOrder from "./pages/HistoryOrder.jsx";
+import StatusOrder from "./pages/StatusOrder.jsx";
+import Favorite from "./pages/Favorite.jsx";
 
 function App() {
   const token = Cookies.get("token");
@@ -36,6 +39,24 @@ function App() {
           path="/cart"
           element={
             isLoggedIn ? <CartPage /> : <Navigate to="/sign-in" replace />
+          }
+        />
+        <Route
+          path="/dashboard/transactions"
+          element={
+            isLoggedIn ? <HistoryOrder /> : <Navigate to="/sign-in" replace />
+          }
+        />
+        <Route
+          path="/dashboard/status"
+          element={
+            isLoggedIn ? <StatusOrder /> : <Navigate to="/sign-in" replace />
+          }
+        />
+        <Route
+          path="/dashboard/favorite"
+          element={
+            isLoggedIn ? <Favorite /> : <Navigate to="/sign-in" replace />
           }
         />
         <Route path="/success" element={<SuccessPage />} />

@@ -3,6 +3,7 @@ import Button from "./Button.jsx";
 import { BsHeart, BsStarFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Star from "./Star.jsx";
+import Heart from "./Heart.jsx";
 
 export default function Barber({ barber }) {
   const { imageId, name, price, rating, _id } = barber;
@@ -24,9 +25,7 @@ export default function Barber({ barber }) {
             </h2>
             <div className="flex items-center justify-between">
               <span className="text-md">Rp{price.toLocaleString("id-ID")}</span>
-              <button>
-                <BsHeart className="text-xl" />
-              </button>
+              <Heart barberId={_id} />
             </div>
             <Star value={rating} />
             <div className="flex items-center justify-between mt-1">

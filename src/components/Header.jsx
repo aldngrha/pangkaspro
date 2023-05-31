@@ -80,7 +80,7 @@ export default function Header() {
                 type="text"
                 name="search"
                 id="search"
-                className="py-2 bg-white rounded-r-lg focus:outline-none"
+                className="py-2 bg-white border-0 rounded-r-lg focus:outline-none"
                 placeholder="Search ..."
               />
             </label>
