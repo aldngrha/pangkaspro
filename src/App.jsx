@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
   Navigate,
-  Outlet,
   Route,
   Routes,
 } from "react-router-dom";
@@ -17,8 +16,6 @@ import CartPage from "./pages/CartPage.jsx";
 import HistoryOrder from "./pages/HistoryOrder.jsx";
 import StatusOrder from "./pages/StatusOrder.jsx";
 import Favorite from "./pages/Favorite.jsx";
-import { PDFViewer } from "@react-pdf/renderer";
-import PDFDoc from "./pages/PDFDoc.jsx";
 
 function App() {
   const token = Cookies.get("token");

@@ -19,8 +19,13 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "option") {
+      setSelectedOption(value);
+      setForm({ ...form, [name]: value });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   const handleRadioChange = (e) => {
@@ -67,7 +72,9 @@ export default function RegisterPage() {
     <section className="container">
       <div className="flex">
         <div className="container p-4 lg:p-8 ">
-          <img src="/assets/images/Logo.svg" alt="Logo" />
+          <Link to="/">
+            <img src="/assets/images/Logo.svg" alt="Logo" />
+          </Link>
           <div
             className={`flex flex-col mt-5 lg:mt-20 lg:mx-10 py-12 bg-white rounded-xl transition-all duration-500  ${
               showInput ? "h-[820px] lg:h-[830px]" : "h-[750px]"
@@ -120,11 +127,11 @@ export default function RegisterPage() {
                   <label className="inline-flex items-center mr-6">
                     <input
                       type="radio"
-                      className="appearance-none text-green-500"
+                      className="appearance-none text-green-500 hidden"
                       name="option"
                       value="yes"
                       onChange={handleRadioChange}
-                      checked={selectedOption === "yes"}
+                      checked={selectedOption === "yes" && showInput}
                     />
                     <span
                       className={`rounded-full h-5 w-5 transition-all duration-500 ${
@@ -134,13 +141,13 @@ export default function RegisterPage() {
                       } flex items-center justify-center relative`}
                     />
                     <span className="ml-2 text-gray-500 font-poppins font-light">
-                      Yes
+                      Ya
                     </span>
                   </label>
                   <label className="inline-flex items-center">
                     <input
                       type="radio"
-                      className="appearance-none text-green-500"
+                      className="appearance-none text-green-500 hidden"
                       name="option"
                       value="no"
                       onChange={handleRadioChange}
@@ -154,7 +161,7 @@ export default function RegisterPage() {
                       } flex items-center justify-center`}
                     />
                     <span className="ml-2 text-gray-500 font-poppins font-light">
-                      No
+                      Tidak
                     </span>
                   </label>
                 </div>

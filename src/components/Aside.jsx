@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import {
+  BsArrowBarLeft,
+  FiHeart,
+  RiTimer2Line,
+  TbHistory,
+  GoHome
+} from "react-icons/all";
 
 export default function Aside() {
   const [username, setUsername] = useState("");
@@ -26,6 +33,24 @@ export default function Aside() {
     navigate("/");
   };
 
+  const nav = [
+    {
+      to: "/dashboard/transactions",
+      label: "History Order",
+      icon: <TbHistory size={20} />,
+    },
+    {
+      to: "/dashboard/status",
+      label: "Status Order",
+      icon: <RiTimer2Line size={20} />,
+    },
+    {
+      to: "/dashboard/favorite",
+      label: "Favorite",
+      icon: <FiHeart size={19} />,
+    },
+  ];
+
   return (
     <>
       <button
@@ -33,7 +58,7 @@ export default function Aside() {
         data-drawer-toggle="logo-sidebar"
         aria-controls="logo-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -66,40 +91,41 @@ export default function Aside() {
             </div>
             <p className="py-3 text-gray-700 font-semibold">{username}</p>
           </div>
-          <ul className="space-y-2 font-medium">
-            <li>
+          <ul className="space-y-2 font-medium py-5">
+            {nav.map((item, index) => (
+              <li key={index}>
+                <NavLink
+                  to={item.to}
+                  className={({ isActive }) => {
+                    return `hover:translate-x-2 transition-transform ease-in duration-200 flex items-center p-2 ${
+                      !isActive
+                        ? "text-gray-500 hover:text-secondary font-light"
+                        : "text-secondary hover:text-secondary-hover font-semibold"
+                    }`;
+                  }}
+                >
+                  {item.icon}
+                  <span className="flex-1 ml-3 whitespace-nowrap">
+                    {item.label}
+                  </span>
+                </NavLink>
+              </li>
+            ))}
+			<li>
               <Link
-                to="/dashboard/transactions"
-                className="flex items-center p-2 text-gray-500 hover:text-secondary"
+                className="hover:translate-x-2 transition-transform ease-in duration-200 flex items-center font-light p-2 text-gray-500 hover:text-secondary cursor-pointer"
+                to="/"
               >
-                <span className="flex-1 ml-3 whitespace-nowrap">
-                  History Order
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/status"
-                className="flex items-center p-2 text-gray-500 hover:text-secondary"
-              >
-                <span className="flex-1 ml-3 whitespace-nowrap">
-                  Status Order
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/favorite"
-                className="flex items-center p-2 text-gray-500 hover:text-secondary"
-              >
-                <span className="flex-1 ml-3 whitespace-nowrap">Favorite</span>
+                <GoHome size={20} />
+                <span className="flex-1 ml-3 whitespace-nowrap">Home</span>
               </Link>
             </li>
             <li>
               <div
-                className="flex items-center p-2 text-gray-500 hover:text-secondary cursor-pointer"
+                className="hover:translate-x-2 transition-transform ease-in duration-200 flex items-center font-light p-2 text-gray-500 hover:text-secondary cursor-pointer"
                 onClick={handleLogout}
               >
+                <BsArrowBarLeft size={20} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Logout</span>
               </div>
             </li>

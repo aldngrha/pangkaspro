@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import Button from "./Button.jsx";
 import { BiMenu, BiX } from "react-icons/bi";
 import Dropdown from "./Dropdown.jsx";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [offCanvas, setOffCanvas] = useState(false);
@@ -23,13 +24,13 @@ export default function Header() {
       <div className="container mx-auto">
         <div className="flex items-center">
           <div className="lg:w-3/12 w-6/12">
-            <a href="">
+            <Link to="/">
               <img
                 className="cursor-pointer"
                 src="/assets/images/Logo.svg"
                 alt="Logo Pangkas Pro"
               />
-            </a>
+            </Link>
           </div>
           <div
             className={`lg:w-5/12 w-full bg-primary lg:bg-none fixed lg:static top-0 h-full lg:h-auto p-10 lg:p-0 transition-all z-10 ${
@@ -70,20 +71,6 @@ export default function Header() {
             </ul>
           </div>
           <div className="lg:w-4/12 lg:flex lg:space-x-5 lg:justify-end hidden">
-            <label htmlFor="search" className="flex">
-              <img
-                src="/assets/images/Search.svg"
-                alt="search"
-                className="py-2 px-2 bg-white rounded-l-lg"
-              />
-              <input
-                type="text"
-                name="search"
-                id="search"
-                className="py-2 bg-white border-0 rounded-r-lg focus:outline-none"
-                placeholder="Search ..."
-              />
-            </label>
             {isLoggedIn ? (
               <Dropdown />
             ) : (

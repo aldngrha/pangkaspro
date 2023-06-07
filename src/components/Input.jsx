@@ -42,7 +42,7 @@ export default function Input({
           name={name}
           value={value}
           onChange={onChange}
-          className="py-2 bg-[#FAFAFA] px-4 rounded-lg font-poppins focus:outline-none"
+          className="py-2 bg-[#FAFAFA] px-4 rounded-lg font-poppins focus:outline-none border-none"
           placeholder={placeholder}
           onAnimationEnd={animate}
         />

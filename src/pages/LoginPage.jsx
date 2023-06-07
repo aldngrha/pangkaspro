@@ -61,7 +61,9 @@ export default function LoginPage() {
           />
         </div>
         <div className="container p-4 lg:p-8 ">
-          <img src="/assets/images/Logo.svg" alt="Logo" />
+          <Link to="/">
+            <img src="/assets/images/Logo.svg" alt="Logo" />
+          </Link>
           <div className="flex flex-col mt-5 lg:mt-20 lg:mx-10 py-12 bg-white rounded-xl">
             <div className="items-center text-center pb-7">
               <h1 className="font-nunito font-black text-xl mb-4">

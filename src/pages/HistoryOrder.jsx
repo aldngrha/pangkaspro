@@ -93,7 +93,8 @@ export default function HistoryOrder() {
     const rating = {
       value: selectedRating,
     };
-    await axios.post(
+    try {
+		await axios.post(
       `http://localhost:9000/api/v1/rating/${barberId}/barbershop`,
       rating,
       {
@@ -111,7 +112,19 @@ export default function HistoryOrder() {
       draggable: true,
       progress: undefined,
     });
+	
     handleCloseModal();
+	} catch (error) {
+		toast.error("Kamu sudah memberikan rating", {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+	}
   };
 
   const fetchTransactions = async () => {
