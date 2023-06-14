@@ -13,8 +13,10 @@ export default function Kapster({ kapster }) {
   const [status, setStatus] = useState("");
   const [statusColor, setStatusColor] = useState("");
 
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+
   useEffect(() => {
-    const socket = io("http://localhost:9000");
+    const socket = io(apiUrl);
 
     // Mendengarkan peristiwa pembaruan countdown
     socket.on("countdownUpdate", ({ id, countdown }) => {
@@ -70,11 +72,11 @@ export default function Kapster({ kapster }) {
         selectedKapster && selectedKapster._id === _id && !isKapsterUnavailable
           ? "border border-secondary cursor-pointer"
           : "border border-primary"
-      } ${isKapsterUnavailable ? "cursor-not-allowed opacity-50" : ""}`}
+      } ${isKapsterUnavailable ? "cursor-not-allowed opacity-70" : ""}`}
     >
       <div className="rounded-lg overflow-hidden w-36 h-30">
         <img
-          src={`http://localhost:9000/${imageUrl}`}
+          src={`${apiUrl}/${imageUrl}`}
           alt="Kapster"
           className="w-full h-32 object-cover object-center"
         />

@@ -8,8 +8,9 @@ import Heart from "./Heart.jsx";
 export default function Barber({ barber }) {
   const { imageId, name, price, rating, _id } = barber;
   const image = imageId[0];
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   // Buat URL lengkap untuk gambar
-  const imageUrl = `http://localhost:9000/${image.imageUrl}`;
+  const imageUrl = `${apiUrl}/${image.imageUrl}`;
   return (
     <motion.div className="container mx-auto my-14">
       <motion.div className="w-[295px] rounded-md bg-white">

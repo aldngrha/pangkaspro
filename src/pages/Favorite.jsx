@@ -9,6 +9,8 @@ import Star from "../components/Star.jsx";
 export default function Favorite() {
   const [favorites, setFavorites] = useState([]);
   const token = Cookies.get("token");
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
 
   useEffect(() => {
     fetchFavorites();
@@ -16,14 +18,11 @@ export default function Favorite() {
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:9000/api/v1/favorites",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/${apiVersion}/favorites`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setFavorites(response.data.data.favorites);
     } catch (error) {
       console.error("Error fetching favorites:", error);
@@ -73,7 +72,7 @@ export default function Favorite() {
                       </th>
                       <td className="px-6 py-4">
                         <img
-                          src={`http://localhost:9000/${barber.imageId[0].imageUrl}`}
+                          src={`${apiUrl}/${barber.imageId[0].imageUrl}`}
                           alt="image"
                           className="w-20 h-20 object-cover"
                         />

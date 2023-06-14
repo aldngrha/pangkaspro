@@ -19,6 +19,7 @@ export default function ProductDetail() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const token = Cookies.get("token");
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
 
   const handleSelectProductDetail = () => {
     if (counterValue === 0) {
@@ -37,6 +38,7 @@ export default function ProductDetail() {
         id: dataApi._id,
         name: dataApi.name,
         price: dataApi.price,
+        shippingCost: dataApi.shippingCost,
         accountName: dataApi.accountName,
         bank: dataApi.bank,
         accountNumber: dataApi.accountNumber,
@@ -79,7 +81,7 @@ export default function ProductDetail() {
                       ].join(" ")}
                     >
                       <img
-                        src={`http://localhost:9000/${item.imageUrl}`}
+                        src={`${apiUrl}/${item.imageUrl}`}
                         alt={item._id}
                         className="object-cover w-full h-full rounded-lg"
                       />
@@ -91,7 +93,7 @@ export default function ProductDetail() {
             <div className="preview">
               <div className="item rounded-lg h-full overflow-hidden">
                 <img
-                  src={`http://localhost:9000/${slider.imageUrl}`}
+                  src={`${apiUrl}/${slider.imageUrl}`}
                   alt={dataApi.name}
                   className="object-cover w-full h-full rounded-lg"
                 />

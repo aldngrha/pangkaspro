@@ -9,7 +9,7 @@ import useLandingPageStore from "../stores/useLandingPageStore.jsx";
 export default function () {
   const fetchData = useLandingPageStore((state) => state.fetchData);
 
-  const apiUrl = "http://localhost:9000";
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const apiVersion = "api/v1";
 
   useEffect(() => {

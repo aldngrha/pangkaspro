@@ -10,6 +10,8 @@ import Input from "../components/Input.jsx";
 export default function LoginPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -18,7 +20,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:9000/api/v1/auth/login",
+        `${apiUrl}/${apiVersion}/auth/login`,
         form
       );
       // Get the token value from the response

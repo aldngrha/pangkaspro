@@ -19,6 +19,9 @@ export default function OrderDetail() {
   const [showInput, setShowInput] = useContext(CartContext);
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
+
   console.log(detailProduct);
   console.log(selectedKapster);
 
@@ -55,7 +58,7 @@ export default function OrderDetail() {
       );
 
       const response = await axios.post(
-        "http://localhost:9000/api/v1/transaction",
+        `${apiUrl}/${apiVersion}/transaction`,
         formData,
         {
           headers: {
@@ -87,17 +90,23 @@ export default function OrderDetail() {
           <ul className="flex flex-col gap-y-3">
             <li>Harga</li>
             <li>Potongan</li>
+            <li>Biaya Perjalanan</li>
           </ul>
           <ul className="flex flex-col gap-y-3">
             <li>Rp{detailProduct.price.toLocaleString("id-ID")}</li>
             <li>0%</li>
+            <li>Rp{detailProduct.shippingCost.toLocaleString("id-ID")}</li>
           </ul>
         </div>
         <hr />
         <ul className="flex justify-between pt-3">
           <li className="font-semibold">Total Harga</li>
           <li className="font-semibold">
-            Rp{(detailProduct.price * counterValue).toLocaleString("id-ID")}
+            Rp
+            {(
+              detailProduct.price * counterValue +
+              detailProduct.shippingCost
+            ).toLocaleString("id-ID")}
           </li>
         </ul>
       </div>
@@ -137,8 +146,8 @@ export default function OrderDetail() {
           <div className="flex justify-between font-light py-6">
             <ul className="flex flex-col gap-y-3">
               <li>Nama Akun</li>
-              <li>Bank</li>
-              <li>Nomor Rekening</li>
+              <li>Bank/E-Wallet</li>
+              <li>No Rek/No Hp</li>
             </ul>
             <ul className="flex flex-col gap-y-3">
               <li>{detailProduct.accountName}</li>

@@ -14,6 +14,8 @@ export default function StatusOrder() {
   const [modalTransactionId, setModalTransactionId] = useState(null);
   const counterValue = useDetailPageStore((state) => state.counterValue);
   const token = Cookies.get("token");
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
 
   useEffect(() => {
     fetchTransactions();
@@ -51,7 +53,7 @@ export default function StatusOrder() {
         ],
       };
       await axios.post(
-        `http://localhost:9000/api/v1/transaction/${transactionId}/addons`,
+        `${apiUrl}/${apiVersion}/transaction/${transactionId}/addons`,
         addOnsData,
         {
           headers: {
@@ -86,14 +88,11 @@ export default function StatusOrder() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:9000/api/v1/transaction",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/${apiVersion}/transaction`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setTransactions(response.data.data.transaction);
     } catch (error) {
       console.error("Error fetching transactions:", error);

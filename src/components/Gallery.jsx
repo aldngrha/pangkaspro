@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 
 export default function Gallery({ gallery }) {
   const { imageUrl } = gallery;
-
-  const images = `http://localhost:9000/${imageUrl}`;
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  // Buat URL lengkap untuk gambar
+  const images = `${apiUrl}/${imageUrl}`;
 
   return (
     <div className="pt-16">

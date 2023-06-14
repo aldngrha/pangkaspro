@@ -17,6 +17,8 @@ export default function RegisterPage() {
     barberName: "",
   });
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +47,7 @@ export default function RegisterPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:9000/api/v1/auth/register",
+        `${apiUrl}/${apiVersion}/auth/register`,
         form
       );
       // Proses berhasil, lakukan pengolahan data atau navigasi ke halaman lain

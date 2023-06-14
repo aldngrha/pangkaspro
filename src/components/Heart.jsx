@@ -7,6 +7,8 @@ import Cookies from "js-cookie";
 export default function Heart({ barberId }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const token = Cookies.get("token");
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -18,7 +20,7 @@ export default function Heart({ barberId }) {
 
     try {
       await axios.post(
-        `http://localhost:9000/api/v1/favorite/${barberId}`,
+        `${apiUrl}/${apiVersion}/favorite/${barberId}`,
         null,
         config
       );

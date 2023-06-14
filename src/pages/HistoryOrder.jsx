@@ -16,6 +16,8 @@ export default function HistoryOrder() {
   const [modalBarberId, setModalBarberId] = useState(null);
   const [isLoading, setIsLoading] = useState({});
   const token = Cookies.get("token");
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const apiVersion = "api/v1";
 
   useEffect(() => {
     fetchTransactions();
@@ -28,7 +30,7 @@ export default function HistoryOrder() {
     }));
     try {
       const response = await axios.get(
-        `http://localhost:9000/api/v1/invoice/${transactionId}/download`,
+        `${apiUrl}/${apiVersion}/invoice/${transactionId}/download`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +60,16 @@ export default function HistoryOrder() {
         progress: undefined,
       });
     } catch (error) {
-      console.error("Error fetching invoice:", error);
+      toast.error("Internal server error", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      console.log("Error fetching invoice:", error);
     } finally {
       setIsLoading((prevLoading) => ({
         ...prevLoading,
@@ -94,49 +105,46 @@ export default function HistoryOrder() {
       value: selectedRating,
     };
     try {
-		await axios.post(
-      `http://localhost:9000/api/v1/rating/${barberId}/barbershop`,
-      rating,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    toast.success("Berhasil memberikan rating", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-	
-    handleCloseModal();
-	} catch (error) {
-		toast.error("Kamu sudah memberikan rating", {
-			position: "top-right",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-		});
-	}
-  };
-
-  const fetchTransactions = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:9000/api/v1/transactions",
+      await axios.post(
+        `${apiUrl}/${apiVersion}/rating/${barberId}/barbershop`,
+        rating,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      toast.success("Berhasil memberikan rating", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      handleCloseModal();
+    } catch (error) {
+      toast.error("Kamu sudah memberikan rating", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  const fetchTransactions = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/${apiVersion}/transactions`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = response.data.data.transaction;
       setTransactions(data);
     } catch (error) {
