@@ -59,9 +59,8 @@ export default function RegisterPage() {
             <img src="/assets/images/Logo.svg" alt="Logo" />
           </Link>
           <div
-            className={`flex flex-col mt-5 lg:mt-20 lg:mx-10 py-12 bg-white rounded-xl transition-all duration-500  ${
-              showInput ? "h-[820px] lg:h-[830px]" : "h-[750px]"
-            }`}
+            className="flex flex-col mt-5 lg:mt-20 lg:mx-10 py-12 bg-white rounded-xl transition-all duration-500 h-[750px]
+            "
           >
             <div className="items-center text-center pb-7">
               <h1 className="font-nunito font-black text-xl mb-4">
