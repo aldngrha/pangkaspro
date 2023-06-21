@@ -96,12 +96,6 @@ export default function LoginPage() {
                 margin="mx-7 lg:mx-16"
                 placeholder="Masukkan password ..."
               />
-              <Link
-                to="/"
-                className="ml-[190px] lg:ml-[275px] font-light text-gray-400 font-poppins hover:text-gray-500"
-              >
-                Lupa password?
-              </Link>
               <Button
                 onClick={handleLogin}
                 type="button"
@@ -110,7 +104,7 @@ export default function LoginPage() {
               />
             </form>
             <p className="text-center pt-4 text-gray-400 font-light font-poppins">
-              Belum punya akun?{" "}
+              Belum punya akun untuk order?{" "}
               <Link
                 to="/sign-up"
                 className="text-secondary font-bold hover:text-secondary-hover"
@@ -119,14 +113,15 @@ export default function LoginPage() {
               </Link>
             </p>
             <p className="text-center pt-4 text-gray-400 font-light font-poppins">
-              Sudah daftar menjadi owner dan kapster? <br />
+              Sudah memiliki barbershop atau ingin membuka barbershop?
               <a
-                href="http://localhost:9000"
+                href="https://server-pangkaspro-production.up.railway.app"
                 className="text-secondary font-bold hover:text-secondary-hover"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Login disini
+                {" "}
+                Klik disini
               </a>
             </p>
           </div>

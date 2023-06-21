@@ -7,8 +7,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [showInput, setShowInput] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -22,24 +20,7 @@ export default function RegisterPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "option") {
-      setSelectedOption(value);
-      setForm({ ...form, [name]: value });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
-  const handleRadioChange = (e) => {
-    const optionValue = e.target.value;
-    setSelectedOption(optionValue);
-    if (e.target.value === "yes") {
-      setForm({ ...form, option: optionValue });
-      setShowInput(true);
-    } else {
-      setForm({ ...form, option: optionValue });
-      setShowInput(false);
-    }
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -51,7 +32,7 @@ export default function RegisterPage() {
         form
       );
       // Proses berhasil, lakukan pengolahan data atau navigasi ke halaman lain
-      console.log(response.data);
+
       toast.success("Registrasi berhasil", {
         position: "top-right",
         autoClose: 5000,
@@ -121,76 +102,8 @@ export default function RegisterPage() {
                 placeholder="Masukkan password ..."
                 onChange={handleChange}
               />
-              <div className="my-4">
-                <div className="mx-7 lg:mx-16">
-                  <p className="mb-2 font-poppins font-medium">
-                    Mau membuka pangkas rambut?
-                  </p>
-                  <label className="inline-flex items-center mr-6">
-                    <input
-                      type="radio"
-                      className="appearance-none text-green-500 hidden"
-                      name="option"
-                      value="yes"
-                      onChange={handleRadioChange}
-                      checked={selectedOption === "yes" && showInput}
-                    />
-                    <span
-                      className={`rounded-full h-5 w-5 transition-all duration-500 ${
-                        selectedOption === "yes"
-                          ? "ring-offset-2 ring-gray-400 ring-1 bg-green-500"
-                          : "ring-1 ring-gray-400 bg-white"
-                      } flex items-center justify-center relative`}
-                    />
-                    <span className="ml-2 text-gray-500 font-poppins font-light">
-                      Ya
-                    </span>
-                  </label>
-                  <label className="inline-flex items-center">
-                    <input
-                      type="radio"
-                      className="appearance-none text-green-500 hidden"
-                      name="option"
-                      value="no"
-                      onChange={handleRadioChange}
-                      checked={selectedOption === "no"}
-                    />
-                    <span
-                      className={`ml-2 rounded-full h-5 w-5 transition-all duration-500 ${
-                        selectedOption === "no"
-                          ? "ring-offset-2 ring-gray-400 ring-1 bg-green-500"
-                          : "ring-1 ring-gray-400 bg-white"
-                      } flex items-center justify-center`}
-                    />
-                    <span className="ml-2 text-gray-500 font-poppins font-light">
-                      Tidak
-                    </span>
-                  </label>
-                </div>
-                <div
-                  className={`mt-3 -mb-28 transition-opacity duration-500 ${
-                    showInput ? "opacity-100" : "opacity-0 duration-200"
-                  }`}
-                >
-                  <Input
-                    forLabel="Nama Pangkas"
-                    label="Nama Pangkas"
-                    type="text"
-                    name="barberName"
-                    value={form.barberName}
-                    margin="mx-7 lg:mx-16"
-                    placeholder="Masukkan nama pangkas ..."
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div
-                className={`flex flex-col ${
-                  showInput
-                    ? "transition duration-500 translate-y-20"
-                    : "transition duration-500 translate-y-0"
-                }`}
-              >
+
+              <div className="flex flex-col transition duration-500 translate-y-0">
                 <Button
                   onClick={handleSubmit}
                   type="button"
